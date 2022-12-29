@@ -4,11 +4,13 @@ import 'package:chess_mania/models/piece_type.dart';
 import 'package:equatable/equatable.dart';
 
 class ChessPieceData extends Equatable {
+  String? id;
   String? name;
   PieceType? type;
   Offset? offset;
 
   ChessPieceData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     type = json['type'] == null ? null : PieceType.values.byName(json['type']);
     offset = Offset(json['x'], json['y']);
@@ -16,6 +18,7 @@ class ChessPieceData extends Equatable {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
+      'id': id,
       'name': name ?? 'unknown',
       'type': type?.name,
       'x': offset?.dx ?? 0,
@@ -25,9 +28,8 @@ class ChessPieceData extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         name,
         type,
-        offset?.dx,
-        offset?.dy,
       ];
 }

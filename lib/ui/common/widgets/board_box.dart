@@ -70,6 +70,7 @@ class BoardBox extends ConsumerWidget {
               data: data,
               rIndex: rIndex,
               cIndex: cIndex,
+              context: context,
             );
       },
     );

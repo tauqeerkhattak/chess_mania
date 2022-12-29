@@ -16,6 +16,9 @@ class PieceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LongPressDraggable(
       data: pieceData,
+      delay: const Duration(
+        milliseconds: 100,
+      ),
       feedback: Opacity(
         opacity: 0.8,
         child: CustomPaint(
