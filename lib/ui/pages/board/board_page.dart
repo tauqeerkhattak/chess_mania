@@ -29,6 +29,18 @@ class _BoardPageState extends ConsumerState<BoardPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(piecesProvider, (previous, next) {
+      if (next is ErrorBoardState) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              next.errorMessage,
+            ),
+          ),
+        );
+      }
+    });
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -81,25 +93,21 @@ class _BoardPageState extends ConsumerState<BoardPage> {
   }
 
   Widget? _getPiece(int dx, int dy) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final state = ref.watch(piecesProvider);
-        if (state is SuccessBoardState) {
-          final pieces = state.pieces.where((element) {
-            return element.offset!.dx.toInt() == dx &&
-                element.offset!.dy.toInt() == dy;
-          }).toList();
-          if (pieces.isNotEmpty) {
-            return PieceWidget(
-              pieceData: pieces.first,
-            );
-          } else {
-            return const SizedBox.shrink();
-          }
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    );
+    final state = ref.watch(piecesProvider);
+    if (state is SuccessBoardState || state is ErrorBoardState) {
+      final pieces = state.pieces.where((element) {
+        return element.offset!.dx.toInt() == dx &&
+            element.offset!.dy.toInt() == dy;
+      }).toList();
+      if (pieces.isNotEmpty) {
+        return PieceWidget(
+          pieceData: pieces.first,
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    } else {
+      return null;
+    }
   }
 }

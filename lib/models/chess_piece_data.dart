@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:chess_mania/models/piece_type.dart';
+import 'package:chess_mania/models/enums/piece_type.dart';
 import 'package:equatable/equatable.dart';
 
 class ChessPieceData extends Equatable {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chess_mania/models/chess_piece_data.dart';
 import 'package:chess_mania/ui/pages/board/board_page.dart';
 import 'package:flutter/material.dart';
@@ -22,18 +24,23 @@ class BoardBox extends ConsumerWidget {
       builder: (context, items, builder) {
         return Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: rIndex % 2 == 0
-                    ? cIndex % 2 == 0
-                        ? AppColors.whiteTile
-                        : AppColors.blackTile
-                    : cIndex % 2 == 0
-                        ? AppColors.blackTile
-                        : AppColors.whiteTile,
-              ),
-              child: Center(
-                child: child,
+            GestureDetector(
+              onTap: () {
+                log('OFFSET: $cIndex $rIndex');
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: rIndex % 2 == 0
+                      ? cIndex % 2 == 0
+                          ? AppColors.whiteTile
+                          : AppColors.blackTile
+                      : cIndex % 2 == 0
+                          ? AppColors.blackTile
+                          : AppColors.whiteTile,
+                ),
+                child: Center(
+                  child: child,
+                ),
               ),
             ),
             if (rIndex == 0)

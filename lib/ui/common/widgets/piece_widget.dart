@@ -3,7 +3,7 @@ import 'package:chess_mania/ui/common/paint/diamond_painter.dart';
 import 'package:chess_mania/ui/common/paint/square_painter.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/piece_type.dart';
+import '../../../models/enums/piece_type.dart';
 
 class PieceWidget extends StatelessWidget {
   final ChessPieceData pieceData;
@@ -47,8 +47,6 @@ class PieceWidget extends StatelessWidget {
         return DiamondPainter(
           color: Colors.blue,
         );
-      case PieceType.circle:
-        return SquarePainter();
     }
   }
 }

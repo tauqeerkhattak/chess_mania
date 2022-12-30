@@ -1,13 +1,20 @@
-import 'package:chess_mania/models/chess_piece_data.dart';
+import '../../../../models/chess_piece_data.dart';
 
-abstract class BoardPageState {}
-
-class LoadingBoardState extends BoardPageState {}
-
-class SuccessBoardState extends BoardPageState {
+abstract class BoardPageState {
   List<ChessPieceData> pieces;
-
-  SuccessBoardState(this.pieces);
+  BoardPageState(this.pieces);
 }
 
-class ErrorBoardState extends BoardPageState {}
+class LoadingBoardState extends BoardPageState {
+  LoadingBoardState() : super([]);
+}
+
+class SuccessBoardState extends BoardPageState {
+  SuccessBoardState(super.pieces);
+}
+
+class ErrorBoardState extends BoardPageState {
+  String errorMessage;
+
+  ErrorBoardState(this.errorMessage, super.pieces);
+}
