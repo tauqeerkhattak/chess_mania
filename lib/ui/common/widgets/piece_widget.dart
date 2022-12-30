@@ -1,6 +1,5 @@
 import 'package:chess_mania/models/chess_piece_data.dart';
-import 'package:chess_mania/ui/common/paint/diamond_painter.dart';
-import 'package:chess_mania/ui/common/paint/square_painter.dart';
+import 'package:chess_mania/ui/common/paint/piece_painter.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/enums/piece_type.dart';
@@ -17,23 +16,25 @@ class PieceWidget extends StatelessWidget {
     return LongPressDraggable(
       data: pieceData,
       delay: const Duration(
-        milliseconds: 100,
+        milliseconds: 150,
       ),
       feedback: Opacity(
         opacity: 0.8,
         child: CustomPaint(
           painter: getPainter(),
-          child: const SizedBox(
-            width: 50,
-            height: 50,
+          child: SizedBox(
+            width: 60,
+            height: 60,
+            child: _buildCenterSpace(),
           ),
         ),
       ),
       child: CustomPaint(
         painter: getPainter(),
-        child: const SizedBox(
-          width: double.infinity,
-          height: double.infinity,
+        child: SizedBox(
+          width: 60,
+          height: 60,
+          child: _buildCenterSpace(),
         ),
       ),
     );
@@ -41,12 +42,27 @@ class PieceWidget extends StatelessWidget {
 
   CustomPainter getPainter() {
     switch (pieceData.type!) {
-      case PieceType.square:
-        return SquarePainter();
-      case PieceType.diamond:
-        return DiamondPainter(
+      case PieceType.red:
+        return PiecePainter(
+          color: Colors.red,
+        );
+      case PieceType.blue:
+        return PiecePainter(
           color: Colors.blue,
         );
     }
+  }
+
+  Widget _buildCenterSpace() {
+    return Center(
+      child: Container(
+        width: 20,
+        height: 20,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 }

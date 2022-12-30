@@ -11,22 +11,33 @@ import 'package:uuid/uuid.dart';
 class BoardPageNotifier extends StateNotifier<BoardPageState> {
   BoardPageNotifier() : super(LoadingBoardState());
   List<ChessPieceData> pieces = [];
-  late PieceType currentTurn;
+  List<int> odds = [7, 5, 3, 1];
+  List<int> evens = [0, 2, 4, 6];
+  PieceType? currentTurn;
 
   void addPieces() {
     final random = Random();
+    currentTurn = PieceType.values[random.nextInt(2)];
     const uuid = Uuid();
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 24; i++) {
       final id = uuid.v4();
-      if (i < 16) {
+      if (i < 12) {
         pieces.add(
           ChessPieceData.fromJson(
             {
               'id': id,
               'name': 'Diamond',
-              'type': 'diamond',
-              'x': i > 7 ? 1 : 0,
-              'y': i > 7 ? 15 - i : i,
+              'type': PieceType.blue.name,
+              'x': i > 3
+                  ? i > 7
+                      ? 2
+                      : 1
+                  : 0,
+              'y': i > 3
+                  ? i > 7
+                      ? odds[11 - i]
+                      : evens[7 - i]
+                  : odds[3 - i],
             },
           ),
         );
@@ -36,15 +47,22 @@ class BoardPageNotifier extends StateNotifier<BoardPageState> {
             {
               'id': id,
               'name': 'Square',
-              'type': 'square',
-              'x': i > 23 ? 6 : 7,
-              'y': i > 23 ? 32 - i - 1 : 24 - i - 1,
+              'type': PieceType.red.name,
+              'x': i > 15
+                  ? i > 19
+                      ? 6
+                      : 5
+                  : 7,
+              'y': i > 15
+                  ? i > 19
+                      ? odds[23 - i]
+                      : evens[19 - i]
+                  : evens[15 - i],
             },
           ),
         );
       }
     }
-    currentTurn = PieceType.values[random.nextInt(2)];
     state = SuccessBoardState(pieces);
   }
 
@@ -64,10 +82,10 @@ class BoardPageNotifier extends StateNotifier<BoardPageState> {
                 cIndex.toDouble(),
                 rIndex.toDouble(),
               );
-              if (currentTurn == PieceType.diamond) {
-                currentTurn = PieceType.square;
+              if (currentTurn == PieceType.blue) {
+                currentTurn = PieceType.red;
               } else {
-                currentTurn = PieceType.diamond;
+                currentTurn = PieceType.blue;
               }
             }
             break;

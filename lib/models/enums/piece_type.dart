@@ -1,1 +1,1 @@
-enum PieceType { square, diamond }
+enum PieceType { red, blue }

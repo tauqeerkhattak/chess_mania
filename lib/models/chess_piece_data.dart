@@ -13,7 +13,10 @@ class ChessPieceData extends Equatable {
     id = json['id'];
     name = json['name'];
     type = json['type'] == null ? null : PieceType.values.byName(json['type']);
-    offset = Offset(json['x'], json['y']);
+    offset = Offset(
+      json['x'].toDouble(),
+      json['y'].toDouble(),
+    );
   }
 
   Map<String, dynamic> toJson() {
