@@ -5,7 +5,6 @@ import 'package:chess_mania/ui/pages/board/board_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/constants.dart';
 import '../app_colors.dart';
 
 class BoardBox extends ConsumerWidget {
@@ -43,32 +42,6 @@ class BoardBox extends ConsumerWidget {
                 ),
               ),
             ),
-            if (rIndex == 0)
-              Positioned(
-                left: 5,
-                top: 5,
-                child: Text(
-                  '${8 - (cIndex)}',
-                  style: TextStyle(
-                    color: cIndex % 2 == 0
-                        ? AppColors.blackTile
-                        : AppColors.whiteTile,
-                  ),
-                ),
-              ),
-            if (cIndex == 7)
-              Positioned(
-                right: 5,
-                bottom: 5,
-                child: Text(
-                  letters[rIndex],
-                  style: TextStyle(
-                    color: rIndex % 2 == 0
-                        ? AppColors.whiteTile
-                        : AppColors.blackTile,
-                  ),
-                ),
-              ),
           ],
         );
       },

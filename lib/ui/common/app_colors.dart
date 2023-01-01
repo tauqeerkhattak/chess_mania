@@ -5,9 +5,7 @@ class AppColors {
   static const whiteTile = Color(0xffEEEED5);
 
   static const gradients = [
-    Color(0xff2ebf91),
-    Color(0xff8360c3),
-    Color(0xffec2F4B),
-    Color(0xffFFF200),
+    blackTile,
+    whiteTile,
   ];
 }

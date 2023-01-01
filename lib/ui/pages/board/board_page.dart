@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:chess_mania/models/enums/piece_type.dart';
 import 'package:chess_mania/ui/common/widgets/current_turn_widget.dart';
 import 'package:chess_mania/ui/pages/board/notifier/board_page_notifier.dart';
@@ -18,10 +15,6 @@ final piecesProvider =
   (ref) => BoardPageNotifier(),
 );
 
-final gradientProvider = StateProvider.autoDispose<Color>(
-  (ref) => AppColors.gradients.first,
-);
-
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
 
@@ -35,12 +28,6 @@ class _BoardPageState extends ConsumerState<BoardPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ref.read(piecesProvider.notifier).addPieces();
-      Timer.periodic(const Duration(seconds: 3), (timer) {
-        final random = Random();
-        final index = random.nextInt(4);
-        print('INDEX: $index');
-        ref.read(gradientProvider.notifier).state = AppColors.gradients[index];
-      });
     });
   }
 
@@ -57,13 +44,18 @@ class _BoardPageState extends ConsumerState<BoardPage> {
   }
 
   Widget _buildBackground() {
-    final change = ref.watch(gradientProvider);
-    print('CHANGED: ${change}');
+    final turn = ref.watch(piecesProvider.notifier).currentTurn;
     return AnimatedContainer(
       duration: const Duration(
         milliseconds: 2000,
       ),
-      color: change,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: turn == PieceType.blue
+              ? AppColors.gradients
+              : AppColors.gradients.reversed.toList(),
+        ),
+      ),
     );
   }
 
